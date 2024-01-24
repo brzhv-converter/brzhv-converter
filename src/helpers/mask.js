@@ -1,0 +1,1 @@
+export const mask = (text, replacer = '*') => replacer.repeat(text.length)
