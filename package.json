@@ -1,5 +1,6 @@
 {
   "name": "birzha-converter-front",
+  "homepage": "https://coralheavens.github.io/BRZHV/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
