@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/BRZHV/static/css/main.de1c7056.css",
+    "main.js": "/BRZHV/static/js/main.f1c6fa1b.js",
+    "static/media/bg.jpg": "/BRZHV/static/media/bg.449967331d8e16eebbd6.jpg",
+    "static/media/eye.svg": "/BRZHV/static/media/eye.c2f0aa32191907165b29a8955ae8516a.svg",
+    "index.html": "/BRZHV/index.html",
+    "main.de1c7056.css.map": "/BRZHV/static/css/main.de1c7056.css.map",
+    "main.f1c6fa1b.js.map": "/BRZHV/static/js/main.f1c6fa1b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de1c7056.css",
+    "static/js/main.f1c6fa1b.js"
+  ]
+}
