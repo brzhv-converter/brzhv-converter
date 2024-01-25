@@ -2,8 +2,6 @@ import { useState } from 'react'
 import useField from "../hooks/useField"
 import Button from "./Button"
 
-const buttonLabel = 'Submit';
-
 const SignUpForm = ({
     title = '',
     onSubmit = () => {}
@@ -65,7 +63,7 @@ const SignUpForm = ({
                         type="submit"
                         onClick={submit}
                     >
-                        {buttonLabel}
+                        Sign up
                     </Button>
                 </div>
             </form>

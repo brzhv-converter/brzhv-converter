@@ -5,6 +5,7 @@ const PATH = {
     loginUser: 'login-user',
     verifyToken: 'verify-token',
     getUser: 'get-user',
+    editUser: 'edit-user',
 }
 
 export const createUser = ({
@@ -51,6 +52,20 @@ export const getUser = ({
         path: PATH.getUser,
         body: {
             id
+        }
+    })
+)
+
+export const editUser = ({
+    login,
+    email,
+    wallet,
+    password
+}) => (
+    POST({
+        path: PATH.editUser,
+        body: {
+            login, email, wallet, password
         }
     })
 )

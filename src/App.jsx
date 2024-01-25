@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn';
 import Trade from './pages/Trade';
 import { ToastContainer } from 'react-toastify';
 import Profile from './pages/Profile';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   const routes = [
@@ -32,6 +33,12 @@ function App() {
       title: 'Profile',
       element: Profile,
       navigatable: true
+    },
+    {
+      path: '*',
+      title: '404',
+      element: PageNotFound,
+      navigatable: false
     },
   ]
 

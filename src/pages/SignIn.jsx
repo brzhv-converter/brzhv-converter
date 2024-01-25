@@ -46,7 +46,7 @@ const SignIn = () => {
     }
     
     return (
-        <main className='relative w-screen h-screen flex flex-col items-center justify-center -mt-[74px]'>
+        <main className=''>
             <Background />
             <CardWrapper>
                 {!isLoading ? (
