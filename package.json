@@ -1,6 +1,6 @@
 {
   "name": "birzha-converter-front",
-  "homepage": "https://brzhv-converter.github.io/",
+  "homepage": "https://brzhv-converter.github.io/client/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
