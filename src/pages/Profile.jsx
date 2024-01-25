@@ -50,17 +50,26 @@ const Profile = () => {
 
     useEffect(() => {
         const session = localStorage.getItem('session');
-        verifyToken({ token: session })
-            .then((res) => res.json()
-            .then((data) => getUser({ id: data?.email })
-            .then((res) => res.json()
-            .then((data) => updateUserData(data)
-        )).catch((err) => {
-            console.log(err);
-            toast.error('Something went wrong.');
+
+        if (!session) {
             navigate('/sign-in')
         }
-        )))
+
+        verifyToken({ token: session })
+            .then((res) => {
+                if (res.status === 200) {
+                    return res.json()
+                        .then((data) => getUser({ id: data?.email })
+                        .then((res) => res.json()
+                        .then((data) =>  updateUserData(data)
+                    )).catch(() => {
+                        navigate('/sign-in')
+                    }
+                    ))
+                } else {
+                    navigate('/sign-in')
+                }
+            })
     }, [navigate])
 
     const submit = () => {
