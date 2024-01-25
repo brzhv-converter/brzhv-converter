@@ -14,9 +14,15 @@ function App() {
       path: '/',
       title: 'Sign up',
       element: SignUp,
+      navigatable: false
+    },
+    {
+      path: '/client',
+      title: 'Sign up',
+      element: SignUp,
       navigatable: true
     },
-  {
+    {
       path: '/sign-in',
       title: 'Sign in',
       element: SignIn,
