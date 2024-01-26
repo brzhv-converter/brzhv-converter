@@ -13,7 +13,7 @@ const Header = ({
             {routes.map(({ path, title, navigatable }) => (
                 navigatable ? (
                     <li key={`navlink-${path}`}>
-                        <Link to={path}
+                        <Link id={`nav-${path}`} to={path}
                             onClick={() => updateIsDropped(false)}
                         >
                             {title}
