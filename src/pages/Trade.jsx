@@ -11,6 +11,7 @@ import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
 import joinClassNames from "../helpers/joinClassNames";
 import { ROUTES } from "../constants/routes";
+import GraphLayout from "../components/GraphLayout";
 
 const amountRegexp = /^\d+(\.\d+)?$/;
 
@@ -53,13 +54,20 @@ const Trade = () => {
         })
     }, [navigate])
 
-    useEffect(() => {
-        if (Object.keys(accaptableCoins).length === 0) return;
-
+    const getPrices = () => {
         getCoins().then((localPrices) => {
             const parsedCoins = parseCoins(localPrices, accaptableCoins);
             updateCoins(parsedCoins);
         })
+    }
+
+    useEffect(() => {
+        if (Object.keys(accaptableCoins).length === 0) return;
+
+        getPrices();
+
+        // const interval = setInterval(getPrices, 5000);
+        // return () => clearInterval(interval);
     }, [updateCoins, accaptableCoins])
 
     const request = () => {
@@ -75,7 +83,7 @@ const Trade = () => {
                         <h2 className="w-full mb-[20px]">
                             Trade
                         </h2>
-                        <div className="grid sm:grid-cols-3 gap-4 mb-3">
+                        <div className="grid sm:grid-cols-3 gap-4 mb-4">
                             <div className="flex flex-col gap-3">
                                 <h4>
                                     I want:
@@ -122,9 +130,11 @@ const Trade = () => {
                         >
                             Request convertation
                         </Button>
-                        <div className="mt-[20px]">
-                            Here will be graph
-                        </div>
+                        {/* <div className="mt-[20px]">
+                            <GraphLayout
+                                coins={coins}
+                            />
+                        </div> */}
                     </div>
                 ) : (
                     <Spinner />
