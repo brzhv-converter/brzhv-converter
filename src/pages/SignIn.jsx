@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import Spinner from "../components/Spinner"
 import { loginUser, verifyToken } from "../services/AuthService"
 import { toast } from "react-toastify"
+import { ROUTES } from "../constants/routes"
 
 const SignIn = () => {
     const [isLoading, updateIsLoading] = useState(false)
@@ -19,7 +20,7 @@ const SignIn = () => {
         .then((res) => {
             if (res.status === 200) {
                 toast.success('Restored the session successfully.')
-                navigate('/trade')
+                navigate(ROUTES.trade)
             }
         })
         .catch(() => localStorage.removeItem('session'))
@@ -37,7 +38,7 @@ const SignIn = () => {
                 } else {
                     toast.success('Success');
                     localStorage.setItem('session', result)
-                    navigate('/trade')
+                    navigate(ROUTES.trade)
                 }
             })
         )).catch((err) => {

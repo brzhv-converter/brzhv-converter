@@ -10,6 +10,7 @@ import { Cointext } from "../App";
 import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
 import joinClassNames from "../helpers/joinClassNames";
+import { ROUTES } from "../constants/routes";
 
 const amountRegexp = /^\d+(\.\d+)?$/;
 
@@ -35,7 +36,7 @@ const Trade = () => {
         const session = localStorage.getItem('session');
 
         if (!session) {
-            navigate('/sign-in')
+            navigate(ROUTES.signIn)
         }
 
         verifyToken({ token: session })
@@ -44,11 +45,11 @@ const Trade = () => {
                 return res.json()
                 .then((data) => updateUserEmail(data?.email))   
             } else {
-                navigate('/sign-in')
+                navigate(ROUTES.signIn)
             }
         })
         .catch(() => {
-            navigate('/sign-in')
+            navigate(ROUTES.signIn)
         })
     }, [navigate])
 

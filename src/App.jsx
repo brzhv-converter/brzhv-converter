@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import Profile from './pages/Profile';
 import PageNotFound from './pages/PageNotFound';
 import { getAccaptableCoins } from './services/BinanceService';
+import { ROUTES } from './constants/routes';
 
 export const Cointext = createContext({});
 
@@ -20,25 +21,25 @@ function App() {
       navigatable: false
     },
     {
-      path: '/client',
+      path: ROUTES.signUp,
       title: 'Sign up',
       element: SignUp,
       navigatable: true
     },
     {
-      path: '/sign-in',
+      path: ROUTES.signIn,
       title: 'Sign in',
       element: SignIn,
       navigatable: true
     },
     {
-      path: '/trade',
+      path: ROUTES.trade,
       title: 'Trade',
       element: Trade,
       navigatable: true
     },
     {
-      path: '/profile',
+      path: ROUTES.profile,
       title: 'Profile',
       element: Profile,
       navigatable: true

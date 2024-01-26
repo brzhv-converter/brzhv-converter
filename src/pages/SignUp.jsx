@@ -6,6 +6,7 @@ import SignUpForm from "../components/SignUpForm"
 import { createUser, verifyToken } from "../services/AuthService"
 import Spinner from "../components/Spinner"
 import { useNavigate } from "react-router-dom"
+import { ROUTES } from "../constants/routes"
 
 const SignUp = () => {
     const [isLoading, updateIsLoading] = useState(false)
@@ -19,7 +20,7 @@ const SignUp = () => {
         .then((res) => {
             if (res.status === 200) {
                 toast.success('Restored the session successfully.')
-                navigate('/trade')
+                navigate(ROUTES.trade)
             }
         })
         .catch(() => localStorage.removeItem('session'))
@@ -37,7 +38,7 @@ const SignUp = () => {
                 } else {
                     toast.success('Success');
                     localStorage.setItem('session', result);
-                    navigate('/trade');
+                    navigate(ROUTES.trade);
                 }
             })
         )).catch((err) => {

@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import useField from "../hooks/useField"
+import { ROUTES } from "../constants/routes"
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Profile = () => {
         const session = localStorage.getItem('session');
 
         if (!session) {
-            navigate('/sign-in')
+            navigate(ROUTES.signIn)
         }
 
         verifyToken({ token: session })
@@ -63,11 +64,11 @@ const Profile = () => {
                         .then((res) => res.json()
                         .then((data) =>  updateUserData(data)
                     )).catch(() => {
-                        navigate('/sign-in')
+                        navigate(ROUTES.signIn)
                     }
                     ))
                 } else {
-                    navigate('/sign-in')
+                    navigate(ROUTES.signIn)
                 }
             })
     }, [navigate])
@@ -79,7 +80,7 @@ const Profile = () => {
         .then((res) => {
             if (res.status === 200) {
                 toast.success('Profile updated successfully');
-                navigate('/trade');
+                navigate(ROUTES.trade);
             } else {
                 toast.error('Something went wrong');
             }

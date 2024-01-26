@@ -2,13 +2,14 @@ import { useEffect } from "react"
 import Background from "../components/Background"
 import CardWrapper from "../components/CardWrapper"
 import { useNavigate } from "react-router-dom"
+import { ROUTES } from "../constants/routes"
 
 const PageNotFound = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
         setTimeout(() => {
-            navigate('/')
+            navigate(ROUTES.signUp)
         }, 2000)
     }, [navigate])
 
