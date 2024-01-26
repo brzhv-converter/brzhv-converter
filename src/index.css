@@ -49,3 +49,12 @@ input {
 
     @apply sm:min-w-[420px]
 }
+
+.scroll-hidden::-webkit-scrollbar { 
+    width: 0 !important;
+    display: none; 
+}
+
+.scroll-hidden {
+    -ms-overflow-style: none;
+}

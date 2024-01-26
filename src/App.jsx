@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import Header from './components/Header';
@@ -7,6 +7,9 @@ import Trade from './pages/Trade';
 import { ToastContainer } from 'react-toastify';
 import Profile from './pages/Profile';
 import PageNotFound from './pages/PageNotFound';
+import { getAccaptableCoins } from './services/BinanceService';
+
+export const Cointext = createContext({});
 
 function App() {
   const routes = [
@@ -48,18 +51,34 @@ function App() {
     },
   ]
 
+  const [coins, updateCoins] = useState({});
+
+  useEffect(() => {
+    getAccaptableCoins()
+    .then((res) => {
+      const convertedData = res.data.reduce((obj, coin) => {
+        obj[coin.ID] = coin.isAccaptable
+        return obj;
+      }, {});
+
+      updateCoins(convertedData);
+    })
+  }, [updateCoins])
+
   return (
-    <Router>
-      <Header
-        routes={routes}
-      />
-      <Routes>
-        {routes.map(({ path, element }) => (
-          <Route key={`route-${path}`} path={path} Component={element} />
-        ))}
-      </Routes>
-      <ToastContainer />
-    </Router>
+    <Cointext.Provider value={coins}>
+      <Router>
+        <Header
+          routes={routes}
+        />
+        <Routes>
+          {routes.map(({ path, element }) => (
+            <Route key={`route-${path}`} path={path} Component={element} />
+          ))}
+        </Routes>
+        <ToastContainer />
+      </Router>
+    </Cointext.Provider>
   );
 }
 
