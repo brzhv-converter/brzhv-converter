@@ -58,7 +58,10 @@ function App() {
     getAccaptableCoins()
     .then((res) => {
       const convertedData = res.data.reduce((obj, coin) => {
-        obj[coin.ID] = coin.isAccaptable
+        obj[coin.ID] = {
+          status: coin.isAccaptable,
+          wallet: coin.wallet
+        }
         return obj;
       }, {});
 

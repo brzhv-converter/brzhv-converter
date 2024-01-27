@@ -3,7 +3,10 @@ export const parseCoins = (coins = [], acceptableCoins) => {
 
     coins.forEach((coin) => {
         if (acceptableCoins[coin.symbol]) {
-            parsedCoins.push(coin);
+            parsedCoins.push({
+                ...coin,
+                wallet: acceptableCoins[coin.symbol].wallet
+            });
         }
     })
 

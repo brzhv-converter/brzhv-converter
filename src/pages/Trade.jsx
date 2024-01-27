@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Background from "../components/Background"
 import { verifyToken } from "../services/AuthService";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import CardWrapper from "../components/CardWrapper";
 import Spinner from "../components/Spinner";
 import { getCoins } from "../services/BinanceService";
@@ -11,7 +11,8 @@ import Dropdown from "../components/Dropdown";
 import Button from "../components/Button";
 import joinClassNames from "../helpers/joinClassNames";
 import { ROUTES } from "../constants/routes";
-import GraphLayout from "../components/GraphLayout";
+import useModal from "../hooks/useModal";
+import { Line } from "../components/Line";
 
 const amountRegexp = /^\d+(\.\d+)?$/;
 
@@ -54,28 +55,89 @@ const Trade = () => {
         })
     }, [navigate])
 
-    const getPrices = () => {
+    const getPrices = useCallback(() => {
         getCoins().then((localPrices) => {
             const parsedCoins = parseCoins(localPrices, accaptableCoins);
             updateCoins(parsedCoins);
         })
-    }
+    }, [accaptableCoins])
 
     useEffect(() => {
         if (Object.keys(accaptableCoins).length === 0) return;
 
         getPrices();
 
-        // const interval = setInterval(getPrices, 5000);
-        // return () => clearInterval(interval);
-    }, [updateCoins, accaptableCoins])
+        const interval = setInterval(getPrices, 30000);
+        return () => clearInterval(interval);
+    }, [updateCoins, accaptableCoins, getPrices])
 
     const request = () => {
         updateIsRequested(true);
+        open();
+    }
+
+    const { Modal, open } = useModal({ onClose: () => updateIsRequested(false) });
+    const [modalWallet, updateModalWallet] = useState();
+    const [isModalRequesting, updateIsModalRequesting] = useState(false);
+
+    const usdAmount = useMemo(() => amount * fromCoin?.price, [fromCoin, amount])
+    const toAmount = useMemo(() => usdAmount * toCoin?.price, [toCoin, usdAmount]);
+
+    const onModalRequest = () => {
+        updateIsModalRequesting(true);
+        const params = {
+            user: userEmail,
+            userProvidedWallet: modalWallet,
+            fromCoin: fromCoin.symbol,
+            fromCoinWallet: fromCoin.wallet,
+            toCoin: toCoin.symbol,
+            toCoinWallet: toCoin.wallet,
+            fromAmount: amount,
+            usdAmount,
+            toAmount,
+        }
+
+        console.log(params)
     }
 
     return (
         <main className="relative">
+            <Modal>
+                <CardWrapper>
+                    {!isModalRequesting ? (
+                        <div
+                            className="max-w-[30vw] flex flex-col gap-4 items-center"
+                        >
+                            <h3 className="text-center">
+                                {`After sending a request you will need to send ${amount} of ${fromCoin?.symbol} to your temporary wallet (equivalent of ${Math.ceil(usdAmount * 100) / 100} USD):`}
+                            </h3>
+                            <Line />
+                            <p className="text-center">
+                                {toCoin?.wallet}
+                            </p>
+                            <Line />
+                            <h4 className="text-center text-slate-500 italic">
+                                As our system is revisioned by managers real time, you are advised to specify wallet, from which you are planning to send convertation amount:
+                            </h4>
+                            <input
+                                key='modal_wallet'
+                                value={modalWallet}
+                                onChange={(e) => updateModalWallet(e.target.value)}
+                                placeholder="Paste your wallet..."
+                                maxLength={50}
+                            />
+                            <Button
+                                onClick={onModalRequest}
+                                disabled={isModalRequesting}
+                            >
+                                Confirm request
+                            </Button>
+                        </div>
+                    ) : (
+                        <Spinner />
+                    )}
+                </CardWrapper>
+            </Modal>
             <Background />
             <CardWrapper>
                 {(userEmail) ? (
@@ -98,7 +160,7 @@ const Trade = () => {
 
                             <div className="flex flex-col gap-3">
                                 <h4>
-                                    Of amount:
+                                    {`Of amount (from coins):`}
                                 </h4>
                                 <input
                                     className={joinClassNames(
